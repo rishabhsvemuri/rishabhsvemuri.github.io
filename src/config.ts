@@ -64,8 +64,8 @@ export const siteConfig = {
           link: "https://github.com/rishabhsvemuri/pgUI"
         },
         {
-          name: "Posit Talk (coming soon)",
-          link: "",
+          name: "Posit Talk",
+          link: "https://www.youtube.com/watch?v=PW_liIFne2g&t=1s",
         }
       ]
     },
