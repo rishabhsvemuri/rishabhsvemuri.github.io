@@ -1,0 +1,83 @@
+<button
+    id="theme-toggle"
+    type="button"
+    class="fixed right-4 top-4 z-[60] inline-flex items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-2 text-[color:var(--color-muted)] shadow-sm transition-colors hover:bg-[color:var(--color-surface-muted-2)] hover:text-[color:var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--color-border-strong)]"
+    aria-label="Switch theme"
+    aria-pressed="false"
+>
+    <span id="theme-toggle-label" class="sr-only">Switch theme</span>
+    <svg
+        id="theme-icon-moon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-5 w-5"
+        aria-hidden="true"
+    >
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+    </svg>
+    <svg
+        id="theme-icon-sun"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="hidden h-5 w-5"
+        aria-hidden="true"
+    >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+</button>
+
+<script is:inline>
+    (() => {
+        const root = document.documentElement;
+        const button = document.getElementById("theme-toggle");
+        const label = document.getElementById("theme-toggle-label");
+        const sunIcon = document.getElementById("theme-icon-sun");
+        const moonIcon = document.getElementById("theme-icon-moon");
+
+        const getTheme = () =>
+            root.dataset.theme === "dark" ? "dark" : "light";
+
+        const render = () => {
+            const theme = getTheme();
+            const nextTheme = theme === "dark" ? "light" : "dark";
+            const actionLabel = `Switch to ${nextTheme} mode`;
+
+            if (label) label.textContent = actionLabel;
+            button?.setAttribute("aria-label", actionLabel);
+            button?.setAttribute(
+                "aria-pressed",
+                theme === "dark" ? "true" : "false",
+            );
+
+            const showSun = theme === "dark";
+            sunIcon?.classList.toggle("hidden", !showSun);
+            moonIcon?.classList.toggle("hidden", showSun);
+        };
+
+        render();
+
+        button?.addEventListener("click", () => {
+            const newTheme = getTheme() === "dark" ? "light" : "dark";
+            root.dataset.theme = newTheme;
+            render();
+        });
+    })();
+</script>
